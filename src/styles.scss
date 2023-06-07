@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-stripes {
+    background-color: #7fa8b409;
+    background-image: linear-gradient(135deg,#b9ccf127 10%,#0000 0,#0000 50%,#b9ccf127 0,#b9ccf127 60%,#0000 0,#0000);
+    background-size: 7.07px 7.07px;
+}

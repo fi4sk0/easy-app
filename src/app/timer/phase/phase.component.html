@@ -1,0 +1,5 @@
+<span class="text-xs">
+    <input class="p-0 text-xs border-0 bg-transparent" type="time"   (blur)="changed($event)" [ngModel]="phase.data.createdAt | date:'HH:mm'">
+    {{visualType?.label}}
+    <span *ngIf="duration">{{duration | readableDuration}}</span>
+</span>

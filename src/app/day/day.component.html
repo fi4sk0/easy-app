@@ -1,0 +1,3 @@
+<app-phase *ngFor="let phase of phases$ | async as phases; let index = index" [nextPhase]="phases?.[index + 1]"
+    [phase]="phase" [startOfDay]="startOfDay">
+</app-phase>

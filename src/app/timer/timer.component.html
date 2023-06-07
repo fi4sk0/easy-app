@@ -1,0 +1,39 @@
+<div class="overflow-scroll w-full h-full">
+  <table class="border-collapse">
+    <thead class="sticky z-10 shadow-md">
+      <tr>
+        <th *ngFor="let startOfDay of startOfDays" class="min-w-[300px]">
+          <h1 class="p-1">{{startOfDay | date: 'dd.MM.'}}</h1>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="h-[120vh] bg-stripes" *ngFor="let startOfDay of startOfDays">
+          <app-day class="block h-full relative m-2" [startOfDay]="startOfDay" [timespan]="timespan"></app-day>
+        </td>
+      </tr>
+      <tr class="border-t-2 border-black">
+        <td class="h-16 bg-stripes" *ngFor="let startOfDay of startOfDays">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="fixed flex-col right-1 top-1 flex z-20 gap-2 p-2">
+  <span (click)="firebase.addPhase(type.type)" *ngFor="let type of types" [ngClass]="type.color"
+    class="rounded shadow-lg px-2 cursor-pointer outline-2 outline-black"
+    [class.outline]="((firebase.currentPhase | async)?.data?.type || null) == type.type">
+    {{ type.label }}
+  </span>
+</div>
+
+
+<div class="fixed bottom-2 right-2">
+  <div class="flex gap-2 p-1">
+    <button *ngFor="let timespanButton of timespanButtons" [class.bg-slate-300]="timespan == timespanButton"
+      [class.bg-white]="timespan != timespanButton" (click)="timespan = timespanButton"
+      class="px-2 py-1.5 rounded shadow-sm">{{timespanButton}} h</button>
+  </div>
+</div>
