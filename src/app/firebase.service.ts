@@ -93,17 +93,18 @@ export class FirebaseService {
     this.lastTwoPhases = this.authState.pipe(switchMap(auth => {
       
       const test = new Subject<QuerySnapshot<any>>()
-      const q = query(collection(this.db, "phases"), where("uid", "==", auth?.uid), limit(2), orderBy("createdAt", "asc"));
+      const q = query(collection(this.db, "phases"), where("uid", "==", auth?.uid), limit(2), orderBy("createdAt", "desc"));
       onSnapshot(q, test)
       return test
     
   }), map((querySnapshot) => {
     const d = [] as FirebaseDocument<Phase>[]
     querySnapshot.forEach(dd => d.push({data: dd.data(), id: dd.id}))
+    console.log("last two phases", d);
     return d
   }))
 
-  this.currentPhase = this.lastTwoPhases.pipe(map(phases => phases?.length == 2 ? phases[1] : null))
+  this.currentPhase = this.lastTwoPhases.pipe(map(phases => phases?.[0] || null))
 
   }
 
@@ -142,8 +143,8 @@ export class FirebaseService {
       return
     }
 
-    const currentPhase = phases[phases.length - 1];
-    const previousPhase = phases[phases.length - 2];
+    const currentPhase = phases[phases.length - 2];
+    const previousPhase = phases[phases.length - 1];
 
     // Early return if user is trying to add the same phase again
     if (currentPhase?.data.type == type) {
